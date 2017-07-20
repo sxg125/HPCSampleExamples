@@ -1,0 +1,23 @@
+ #PBS -N GPUTorchJob
+ #PBS -l walltime=1:00:00
+ #PBS -l nodes=1:ppn=1:gpus=1
+ #PBS -q gpu
+ #PBS -j oe
+
+#export CUDA_VISIBLE_DEVICES=`gpu-free`
+
+cd $PBS_O_WORKDIR
+cp simple.lua $PFSDIR
+
+# cd to temporary direcotry
+ cd $PFSDIR
+
+# Load the Torch7 module
+ module load torch/torch7-cuda
+
+ # Run torch
+ th simple.lua
+
+# Copy everything back to the working directory
+cp -r * $PBS_O_WORKDIR
+
